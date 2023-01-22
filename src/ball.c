@@ -1,5 +1,4 @@
 #include "ball.h"
-#include "raylib.h"
 #include <stdio.h>
 
 Ball createBall(int x, int y, int w, int h, float speed)
@@ -17,12 +16,10 @@ void checkScreenEdgeCollision(Ball* ball)
     if(ball->rect.x < 0 || ball->rect.x > 1260)
     {
         ball->dx = -ball->dx;
-        printf("Collision X \n");
     }
 
     if(ball->rect.y < 0 || ball->rect.y > 700)
     {
-        printf("Collision Y \n");
         ball->dy = -ball->dy;
     }
 }
