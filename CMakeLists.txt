@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(RayEngine)
+project(RLPong)
 
 # Variables.
 # 
@@ -24,6 +24,10 @@ include_directories(${INCLUDE_DIRS})
 # 
 add_executable(${BIN_NAME} main.c ${SRC_FILES})
 
+add_subdirectory(src)
+
 # Link in any libraies the binary needs.
 # 
 target_link_libraries(${BIN_NAME} raylib m)
+
+target_link_libraries(${BIN_NAME} rlpong_sources )
