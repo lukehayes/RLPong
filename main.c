@@ -27,7 +27,19 @@ int main() {
 
         if(CheckCollisionRecs(ball.rect, paddle.rect))
         {
-            printf("Hit \n");
+            switch(GetRandomValue(1,4))
+            {
+                case 1:
+                    ball.dx = -ball.dx;
+                    break;
+                case 2:
+                    ball.dy = -ball.dy;
+                    break;
+                case 3:
+                    ball.dx = -ball.dx;
+                    ball.dy = -ball.dy;
+                    break;
+            }
         }
 
         updateBall(&ball, delta);
