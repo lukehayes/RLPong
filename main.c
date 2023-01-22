@@ -7,6 +7,7 @@
 
 float delta = 0.0;
 float c = 0.0;
+int COUNT = 10;
 
 int main() {
 
@@ -17,6 +18,17 @@ int main() {
 
     Ball ball = createBall(10,10,10,10, 300.0);
     Paddle paddle = createPaddle(600,650,100,10, 300.0);
+
+    Ball balls[COUNT];
+
+    for(int i = 0; i<= COUNT; i++)
+    {
+        int rx = GetRandomValue(10,40);
+        int ry = GetRandomValue(10,40);
+        int dx = GetRandomValue(-1,1);
+        balls[i] = createBall(i * rx,  i * rx, 10,10, 300.0);
+        balls[i].dx = dx;
+    }
 
     SetTargetFPS(60);
 
@@ -45,10 +57,23 @@ int main() {
         updateBall(&ball, delta);
         updatePaddle(&paddle, delta);
 
+        for(int i = 0; i<= COUNT; i++)
+        {
+            Ball* b = &balls[i];
+            updateBall(b, delta);
+        }
+
         BeginDrawing();
             ClearBackground(DARKGRAY);
             drawBall(&ball);
             drawPaddle(&paddle);
+
+            for(int i = 0; i<= COUNT; i++)
+            {
+                Ball b = balls[i];
+                drawBall(&b);
+            }
+
         EndDrawing();
 
     }
