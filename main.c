@@ -13,6 +13,8 @@ int main() {
     SetTraceLogLevel(LOG_ALL);
     InitWindow(1280, 720, "RLPong");
 
+    DisableCursor();
+
     Ball ball = createBall(10,10,10,10, 300.0);
     Paddle paddle = createPaddle(600,650,100,10, 300.0);
 
