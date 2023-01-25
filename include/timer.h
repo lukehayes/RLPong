@@ -33,19 +33,37 @@ Timer createTimer(float time, int repeat)
  */
 void updateTimer(Timer* timer, float delta)
 {
-    timer->elapsed += delta;
-
-    if(timer->elapsed > timer->time)
+    if(!timer->finished)
     {
-        if(timer->repeat && !timer->finished)
-        {
-            timer->elapsed = 0.0;
-            timer->finished = true;
+        timer->elapsed += delta;
+        printf("Elapsed: %i\n", timer->elapsed);
 
-        }else
+        if(timer->elapsed >= timer->time)
         {
-            timer->elapsed = 0.0;
+            timer->finished = true;
+            timer->elapsed = 0;
+        }
+    }else
+    {
+        if(timer->repeat)
+        {
             timer->finished = false;
+            timer->elapsed = 0;
         }
     }
+
+    //if(timer->elapsed > timer->time)
+    //{
+
+        //if(timer->repeat && !timer->finished)
+        //{
+            //timer->elapsed = 0.0;
+            //timer->finished = true;
+
+        //}else
+        //{
+            //timer->elapsed = 0.0;
+            //timer->finished = false;
+        //}
+    //}
 }
