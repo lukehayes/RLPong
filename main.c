@@ -9,7 +9,7 @@
 
 float delta = 0.0;
 float c = 0.0;
-int MAX = 10;
+int MAX = 100;
 Color BGCOLOR = {250, 243, 221, 255};
 
 int main() {
@@ -20,9 +20,15 @@ int main() {
     Ball ball = createBall(10,10,10,10, 300.0);
     Paddle paddle = createPaddle(600,650,100,10, 300.0);
 
-    Rocket r = createRocket(10,10, 1.0, RED);
-    Vector2 target = GetMousePosition();
-    setRocketTarget(&r, target);
+    Rocket r = createRocket(10,10, 2.0, RED);
+
+    int rocket_count = 0;
+    Rocket rockets[MAX];
+    
+    // for(int i = 0; i <= MAX - 1; i++)
+    // {
+    //     rockets[i] = NULL;
+    // }
 
 
     Circle circles[MAX];
@@ -51,6 +57,22 @@ int main() {
 
         updateRocket(&r);
 
+        if(IsMouseButtonPressed(0))
+        {
+            TraceLog(1, "ROCKET LAUNCHED");
+            printf("ROCKET LAUNCHED: %i \n", rocket_count);
+            Vector2 mp = GetMousePosition();
+            Rocket r = createRocket(1280 / 2, 720, 5.0, RED);
+            setRocketTarget(&r, mp);
+
+            rockets[rocket_count] = r;
+
+            rocket_count += 1;
+        }
+
+        Vector2 target = GetMousePosition();
+        setRocketTarget(&r, target);
+
         BeginDrawing();
             ClearBackground(BGCOLOR);
 
@@ -62,6 +84,19 @@ int main() {
             // }
 
             drawRocket(&r);
+
+            for(int i = 0; i <= MAX - 1; i++)
+            {
+                Rocket* r = &rockets[i];
+                updateRocket(r);
+            }
+
+            for(int i = 0; i <= MAX - 1; i++)
+            {
+                Rocket r = rockets[i];
+                drawRocket(&r);
+            }
+
 
             // drawBall(&ball);
             // drawPaddle(&paddle);
