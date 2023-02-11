@@ -2,13 +2,14 @@
 #include "ball.h"
 #include "paddle.h"
 #include "circle.h"
+#include "rocket.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 float delta = 0.0;
 float c = 0.0;
-int MAX = 100;
+int MAX = 10;
 Color BGCOLOR = {250, 243, 221, 255};
 
 int main() {
@@ -18,6 +19,11 @@ int main() {
 
     Ball ball = createBall(10,10,10,10, 300.0);
     Paddle paddle = createPaddle(600,650,100,10, 300.0);
+
+    Rocket r = createRocket(10,10, 1.0, RED);
+    Vector2 target = GetMousePosition();
+    setRocketTarget(&r, target);
+
 
     Circle circles[MAX];
     Color colors[3] = {
@@ -43,15 +49,19 @@ int main() {
         delta = GetFrameTime();
         c += 0.01;
 
+        updateRocket(&r);
+
         BeginDrawing();
             ClearBackground(BGCOLOR);
 
-            for(int i = 0; i <= MAX - 1; i++)
-            {
-                Circle circle = circles[i];
-                circle.radius += sin(c) * 10;
-                drawCircle(&circle);
-            }
+            // for(int i = 0; i <= MAX - 1; i++)
+            // {
+            //     Circle circle = circles[i];
+            //     circle.radius += sin(c) * 10;
+            //     drawCircle(&circle);
+            // }
+
+            drawRocket(&r);
 
             // drawBall(&ball);
             // drawPaddle(&paddle);
