@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "math.h"
+#include <stdio.h>
 
 typedef struct Rocket
 {
@@ -28,6 +29,8 @@ void updateRocket(Rocket* r)
       r->position.x - r->target.x
   );
 
+  bool targetReached = (r->position.x == r->target.x) && (r->position.y == r->target.y);
+
   r->position.x -= cos(angle) *  r->speed;
   r->position.y -= sin(angle) *  r->speed;
 }
@@ -40,4 +43,6 @@ void drawRocket(Rocket* r)
     10,10,
     r->color
   );
+
+  DrawLine(1280 / 2, 720, r->position.x + 2, r->position.y +2, BLUE);
 }
