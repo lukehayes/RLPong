@@ -24,6 +24,10 @@ include_directories(${INCLUDE_DIRS})
 # 
 add_executable(${BIN_NAME} main.c ${SRC_FILES})
 
+# Create the final binary.
+# 
+add_subdirectory(src)
+
 # Link in any libraies the binary needs.
 # 
 target_link_libraries(${BIN_NAME} raylib m)

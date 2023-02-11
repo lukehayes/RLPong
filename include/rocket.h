@@ -1,7 +1,6 @@
 #pragma once
 
 #include "raylib.h"
-#include "math.h"
 
 typedef struct Rocket
 {
@@ -12,34 +11,10 @@ typedef struct Rocket
 
 } Rocket;
 
-Rocket createRocket(int x, int y, float s, Color c)
-{
-  Rocket rocket = {.position = {x,y}, .speed = s, .color = c};
-  return rocket;
-}
+Rocket createRocket(int x, int y, float s, Color c);
 
-void setRocketTarget(Rocket* r, Vector2 t)
-{
-  r->target = t;
-}
+void setRocketTarget(Rocket* r, Vector2 t);
 
-void updateRocket(Rocket* r)
-{
-  float angle = atan2(
-      r->position.y - r->target.y,
-      r->position.x - r->target.x
-  );
+void updateRocket(Rocket* r);
 
-  r->position.x += cos(angle) *  r->speed;
-  r->position.y += sin(angle) *  r->speed;
-}
-
-void drawRocket(Rocket* r)
-{
-  DrawRectangle(
-    r->position.x,
-    r->position.y,
-    10,10,
-    r->color
-  );
-}
+void drawRocket(Rocket* r);
