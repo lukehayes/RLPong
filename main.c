@@ -1,13 +1,15 @@
 #include "raylib.h"
 #include "ball.h"
 #include "paddle.h"
-#include "timer.h"
+#include "circle.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 float delta = 0.0;
 float c = 0.0;
+int MAX = 100;
+Color BGCOLOR = {250, 243, 221, 255};
 
 int main() {
 
@@ -17,7 +19,22 @@ int main() {
     Ball ball = createBall(10,10,10,10, 300.0);
     Paddle paddle = createPaddle(600,650,100,10, 300.0);
 
-    Timer t = createTimer(1,true);
+    Circle circles[MAX];
+    Color colors[3] = {
+        {200,213,185,255},
+        {104,175,101,255},
+        {109,105,125,255},
+    };
+
+    for(int i = 0; i <= MAX - 1; i++)
+    {
+        int rx = GetRandomValue(10,1200);
+        int ry = GetRandomValue(10,700);
+        int rr = GetRandomValue(1.0,20.0);
+        Color rc = colors[GetRandomValue(0,2)];
+        Circle circle = createCircle(rx,ry,rr, rc);
+        circles[i] = circle;
+    }
 
     SetTargetFPS(60);
 
@@ -26,31 +43,18 @@ int main() {
         delta = GetFrameTime();
         c += 0.01;
 
-        if(CheckCollisionRecs(ball.rect, paddle.rect))
-        {
-            printf("Hit \n");
-        }
-
-        printf("Finished? %i \n", t.finished);
-        printf("Elapsed: %f \n", t.elapsed);
-
-        if(t.finished)
-        {
-            paddle.color = BLUE;
-            ball.color = PINK;
-            ball.rect.width = GetRandomValue(10,100);
-            printf("FInished \n");
-        }
-
-        updateTimer(&t, delta);
-
-        updateBall(&ball, delta);
-        updatePaddle(&paddle, delta);
-
         BeginDrawing();
-            ClearBackground(DARKGRAY);
-            drawBall(&ball);
-            drawPaddle(&paddle);
+            ClearBackground(BGCOLOR);
+
+            for(int i = 0; i <= MAX - 1; i++)
+            {
+                Circle circle = circles[i];
+                circle.radius += sin(c) * 10;
+                drawCircle(&circle);
+            }
+
+            // drawBall(&ball);
+            // drawPaddle(&paddle);
         EndDrawing();
 
     }
