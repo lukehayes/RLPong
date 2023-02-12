@@ -9,7 +9,7 @@
 
 float delta = 0.0;
 float c = 0.0;
-int MAX = 100;
+int MAX = 5;
 Color BGCOLOR = {250, 243, 221, 255};
 
 int main() {
@@ -17,20 +17,18 @@ int main() {
     SetTraceLogLevel(LOG_ALL);
     InitWindow(1280, 720, "RLPong");
 
-    Ball ball = createBall(10,10,10,10, 300.0);
-    Paddle paddle = createPaddle(600,650,100,10, 300.0);
-
     Rocket r = createRocket(10,10, 2.0, RED);
 
     int rocket_count = 0;
     Rocket rockets[MAX];
+
+    for(int i = 0; i <= MAX - 1; i++)
+    {
+        Rocket r = createRocket(1280 / 2, 720, 5.0, BLUE);
+        r.isMoving = false;
+        rockets[i] = r;
+    }
     
-    // for(int i = 0; i <= MAX - 1; i++)
-    // {
-    //     rockets[i] = NULL;
-    // }
-
-
     Circle circles[MAX];
     Color colors[3] = {
         {200,213,185,255},
@@ -59,10 +57,10 @@ int main() {
 
         if(IsMouseButtonPressed(0))
         {
-            TraceLog(1, "ROCKET LAUNCHED");
             printf("ROCKET LAUNCHED: %i \n", rocket_count);
             Vector2 mp = GetMousePosition();
             Rocket r = createRocket(1280 / 2, 720, 5.0, RED);
+            r.isMoving = true;
             setRocketTarget(&r, mp);
 
             rockets[rocket_count] = r;
@@ -76,32 +74,16 @@ int main() {
         BeginDrawing();
             ClearBackground(BGCOLOR);
 
-            // for(int i = 0; i <= MAX - 1; i++)
-            // {
-            //     Circle circle = circles[i];
-            //     circle.radius += sin(c) * 10;
-            //     drawCircle(&circle);
-            // }
-
             drawRocket(&r);
 
             for(int i = 0; i <= MAX - 1; i++)
             {
                 Rocket* r = &rockets[i];
                 updateRocket(r);
+                drawRocket(r);
             }
 
-            for(int i = 0; i <= MAX - 1; i++)
-            {
-                Rocket r = rockets[i];
-                drawRocket(&r);
-            }
-
-
-            // drawBall(&ball);
-            // drawPaddle(&paddle);
         EndDrawing();
-
     }
 
     CloseWindow();
