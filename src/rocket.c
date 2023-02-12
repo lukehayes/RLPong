@@ -1,19 +1,14 @@
+#include "rocket.h"
 #include "raylib.h"
+#include "raymath.h"
 #include "math.h"
 #include <stdio.h>
-
-typedef struct Rocket
-{
-  Vector2 position;
-  Vector2 target;
-  float speed;
-  Color color;
-
-} Rocket;
+#include <stdbool.h>
 
 Rocket createRocket(int x, int y, float s, Color c)
 {
   Rocket rocket = {.position = {x,y}, .speed = s, .color = c};
+  rocket.isMoving = true;
   return rocket;
 }
 
@@ -29,10 +24,14 @@ void updateRocket(Rocket* r)
       r->position.x - r->target.x
   );
 
-  bool targetReached = (r->position.x == r->target.x) && (r->position.y == r->target.y);
+  float distanceToTarget = Vector2Distance(r->position, r->target);
 
-  r->position.x -= cos(angle) *  r->speed;
-  r->position.y -= sin(angle) *  r->speed;
+  if(distanceToTarget > 1)
+  {
+    r->position.x -= cos(angle) *  r->speed;
+    r->position.y -= sin(angle) *  r->speed;
+  }
+
 }
 
 void drawRocket(Rocket* r)
@@ -44,5 +43,5 @@ void drawRocket(Rocket* r)
     r->color
   );
 
-  DrawLine(1280 / 2, 720, r->position.x + 2, r->position.y +2, BLUE);
+  // DrawLine(1280 / 2, 720, r->position.x + 2, r->position.y +2, BLUE);
 }

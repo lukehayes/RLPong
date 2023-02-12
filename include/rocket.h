@@ -8,6 +8,7 @@ typedef struct Rocket
   Vector2 target;
   float speed;
   Color color;
+  bool isMoving;
 
 } Rocket;
 
