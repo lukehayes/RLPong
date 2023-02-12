@@ -14,6 +14,8 @@ typedef struct Rocket
 
 Rocket createRocket(int x, int y, float s, Color c);
 
+Rocket* createRocketPtr(int x, int y, float s, Color c);
+
 void setRocketTarget(Rocket* r, Vector2 t);
 
 void updateRocket(Rocket* r);

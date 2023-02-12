@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "math.h"
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -9,6 +10,15 @@ Rocket createRocket(int x, int y, float s, Color c)
 {
   Rocket rocket = {.position = {x,y}, .speed = s, .color = c};
   rocket.isMoving = true;
+  return rocket;
+}
+
+Rocket* createRocketPtr(int x, int y, float s, Color c)
+{
+  Rocket* rocket = malloc(sizeof(Rocket));
+  rocket->position.x = x;
+  rocket->position.y = y;
+  rocket->isMoving = true;
   return rocket;
 }
 
@@ -26,12 +36,16 @@ void updateRocket(Rocket* r)
 
   float distanceToTarget = Vector2Distance(r->position, r->target);
 
-  if(distanceToTarget > 1)
+
+
+  if(distanceToTarget > 1 && r->isMoving)
   {
     r->position.x -= cos(angle) *  r->speed;
     r->position.y -= sin(angle) *  r->speed;
+  }else
+  {
+    r->isMoving = false;
   }
-
 }
 
 void drawRocket(Rocket* r)
