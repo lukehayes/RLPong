@@ -3,6 +3,7 @@
 #include "paddle.h"
 #include "circle.h"
 #include "rocket.h"
+#include "logging.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,12 +12,6 @@ float delta = 0.0;
 float c = 0.0;
 int MAX = 5;
 Color BGCOLOR = {250, 243, 221, 255};
-
-#if DEV_DEBUG == 1
-#define LOG(x) (printf("LOG: %s \n", x))
-#else
-#define LOG(x)
-#endif
 
 int main() {
 
