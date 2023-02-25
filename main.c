@@ -12,6 +12,12 @@ float c = 0.0;
 int MAX = 5;
 Color BGCOLOR = {250, 243, 221, 255};
 
+#if DEV_DEBUG == 1
+#define LOG(x) (printf("LOG: %s \n", x))
+#else
+#define LOG(x)
+#endif
+
 int main() {
 
     SetTraceLogLevel(LOG_ALL);
